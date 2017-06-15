@@ -31,9 +31,26 @@ hunsDigit x = d2
   where (xLast, _) = divMod x 100
         (_, d2)     = divMod xLast 10
 
+-- 2
 foldBool :: a -> a -> Bool -> a
 foldBool x y z = case z of
   True  -> x
   False -> y
---foldBool' :: a -> a -> Bool -> a
+foldBool' :: a -> a -> Bool -> a
+foldBool' x y z
+  | z          = x
+  | otherwise  = y
+
+-- 3
+higher :: (a -> b) -> (a, c) -> (b, c)
+higher f (x, y) = (f x, y)
+
+-- 4
+
+
+
+
+
+
+
 
