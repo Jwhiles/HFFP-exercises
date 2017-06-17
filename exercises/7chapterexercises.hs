@@ -36,6 +36,7 @@ foldBool :: a -> a -> Bool -> a
 foldBool x y z = case z of
   True  -> x
   False -> y
+
 foldBool' :: a -> a -> Bool -> a
 foldBool' x y z
   | z          = x
@@ -46,7 +47,7 @@ higher :: (a -> b) -> (a, c) -> (b, c)
 higher f (x, y) = (f x, y)
 
 -- 4
-
+-- see arith4.hs
 
 
 
