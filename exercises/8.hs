@@ -39,5 +39,5 @@ digits i = reverse (go i)
          | d < 1 = []
          | otherwise = d `mod` 10 : go (d `div` 10)
 
---wordNumber :: Int -> String
+wordNumber :: Int -> String
 wordNumber n = concat $ intersperse "-" (map digitToWord $ digits n)
