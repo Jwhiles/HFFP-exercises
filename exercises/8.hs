@@ -34,10 +34,10 @@ digitToWord 9 = "nine"
 digitToWord _ = "more than one digit"
 
 digits :: Int -> [Int]
-digits i = reverse (go i)
+digits i = go i
   where go d
          | d < 1 = []
-         | otherwise = d `mod` 10 : go (d `div` 10)
+         | otherwise = go (d `div` 10) ++ [d `mod` 10] 
 
 wordNumber :: Int -> String
 wordNumber n = concat $ intersperse "-" (map digitToWord $ digits n)
