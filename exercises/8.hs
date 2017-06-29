@@ -11,33 +11,40 @@
 --         | b == 0 = prod
 --         | otherwise = go a (b - 1) (prod + a)
 -- 
+
+data DividedResult =
+    Result Integer
+  | DividedByZero
+
+dividedBy :: Integral a => a -> a -> (DividedResult, DividedResult)
+dividedBy _ 0 = (DividedByZero, DividedByZero)
 -- mc91 :: (Num a, Ord a) => a -> a
 -- mc91 n
 --  | n > 100   = n - 10
 --  | otherwise = mc91 . mc91 $ n + 11
 -- 
 -- numbers into words
-module WordNumber where
-import Data.List (intersperse)
-
-digitToWord :: Int -> String
-digitToWord 0 = "zero"
-digitToWord 1 = "one"
-digitToWord 2 = "two"
-digitToWord 3 = "three"
-digitToWord 4 = "four"
-digitToWord 5 = "five"
-digitToWord 6 = "six"
-digitToWord 7 = "seven"
-digitToWord 8 = "eight"
-digitToWord 9 = "nine"
-digitToWord _ = "more than one digit"
-
-digits :: Int -> [Int]
-digits i = reverse (go i)
-  where go d
-         | d < 1 = []
-         | otherwise = d `mod` 10 : go (d `div` 10)
-
---wordNumber :: Int -> String
-wordNumber n = concat $ intersperse "-" (map digitToWord $ digits n)
+-- module WordNumber where
+-- import Data.List (intersperse)
+-- 
+-- digitToWord :: Int -> String
+-- digitToWord 0 = "zero"
+-- digitToWord 1 = "one"
+-- digitToWord 2 = "two"
+-- digitToWord 3 = "three"
+-- digitToWord 4 = "four"
+-- digitToWord 5 = "five"
+-- digitToWord 6 = "six"
+-- digitToWord 7 = "seven"
+-- digitToWord 8 = "eight"
+-- digitToWord 9 = "nine"
+-- digitToWord _ = "more than one digit"
+-- 
+-- digits :: Int -> [Int]
+-- digits i = reverse (go i)
+--   where go d
+--          | d < 1 = []
+--          | otherwise = d `mod` 10 : go (d `div` 10)
+-- 
+-- --wordNumber :: Int -> String
+-- wordNumber n = concat $ intersperse "-" (map digitToWord $ digits n)
