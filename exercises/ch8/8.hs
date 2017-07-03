@@ -11,6 +11,13 @@
 --         | b == 0 = prod
 --         | otherwise = go a (b - 1) (prod + a)
 -- 
+
+data DividedResult =
+    Result Integer
+  | DividedByZero
+
+dividedBy :: Integral a => a -> a -> (DividedResult, DividedResult)
+dividedBy _ 0 = (DividedByZero, DividedByZero)
 -- mc91 :: (Num a, Ord a) => a -> a
 -- mc91 n
 --  | n > 100   = n - 10

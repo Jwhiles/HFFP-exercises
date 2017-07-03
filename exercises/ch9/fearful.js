@@ -37,3 +37,38 @@ myWords2 words = go words []
             where
               currentWord = getWord w;
               newWords = removeWord ((length currentWord) + 1) w 
+
+myWords3 :: String -> [String]
+myWords3 [] = []
+myWords3 (' ':rest) = myWords3 rest
+myWords3 s = w: myWords3 t
+  where
+    w = takeWhile(/= ' ') s
+    t = dropWhile(/= ' ') s
+
+firstSen = "Tyger Tyger, burning bright\n"
+secondSen = "In the forests of the night\n"
+thirdSen = "What immortal hand or eye\n"
+fourthSen = "Could frame thy fearful symmetry?"
+sentences = firstSen ++ secondSen
+          ++ thirdSen ++ fourthSen
+
+myLines :: String -> [String]
+myLines [] = [] 
+myLines ('\n':s) = myLines s
+myLines s = w: myLines t
+  where
+    w = takeWhile(/= '\n') s
+    t = dropWhile(/= '\n') s
+
+splitAtChar :: Char -> String -> [String]
+splitAtChar c s = go s
+  where
+    go str
+     | str == [] = []
+     | head str == c = go (tail str)
+     | otherwise = w : go t
+                  where 
+                    w = takeWhile(/= c) str
+                    t = dropWhile(/= c) str
+
