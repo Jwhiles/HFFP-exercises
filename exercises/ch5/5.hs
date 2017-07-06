@@ -34,7 +34,8 @@ g :: String -> Char
 g = undefined
 
 h :: Int -> Char
-h i = g $ f i
+h i = g $ f i 
+-- or h = g . f
 
 -- 2
 data A

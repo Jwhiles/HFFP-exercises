@@ -9,6 +9,7 @@ g = undefined
 
 h = g . f
 -- has type signature of Char -> [String]
+
 -- 3
 three :: Ord a => a -> a -> Bool
 three = undefined
