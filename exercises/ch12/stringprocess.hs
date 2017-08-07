@@ -40,3 +40,6 @@ countTheBeforeVowel s = go (words s) 0
     go (x:y:xs) c = if x == "the" && elem (head y) "aeiou" 
                         then go (y:xs) (c + 1)
                         else go (y:xs) c
+
+countVowels :: String -> Int
+countVowels = length . filter (\l -> elem l "aeiou")
