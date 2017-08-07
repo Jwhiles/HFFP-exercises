@@ -31,3 +31,12 @@ replaceThe'' s = intercalate " " $ zipWith fromMaybe w t
 
 -- is there a cleaner way to do this - without intercalate? idk
 --
+
+countTheBeforeVowel :: String -> Integer
+countTheBeforeVowel s = go (words s) 0
+  where 
+    go [] c       = c 
+    go (x:[]) c   = c
+    go (x:y:xs) c = if x == "the" && elem (head y) "aeiou" 
+                        then go (y:xs) (c + 1)
+                        else go (y:xs) c
