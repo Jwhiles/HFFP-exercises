@@ -43,3 +43,26 @@ countTheBeforeVowel s = go (words s) 0
 
 countVowels :: String -> Int
 countVowels = length . filter (\l -> elem l "aeiou")
+
+newtype Word' =
+  Word' String
+  deriving (Eq, Show)
+
+vowel = "aeiou"
+
+mkWordHelp :: (Integer, Integer) -> Bool
+mkWordHelp (v, c)
+  | v > c = False 
+  | otherwise = True
+
+mkWord :: String -> Maybe Word'
+mkWord w = if mkWordHelp x then Just (Word' w) else Nothing
+  where x = foldr (\a (v, c) -> if (elem a vowel) then ((v + 1), c) else (v, (c + 1))) (0, 0) w
+
+mkWord' :: String -> Maybe Word'
+mkWord' w
+  | (length c) >= (length v) = Just (Word' w)
+  | otherwise = Nothing
+  where v = filter (\a -> elem a vowel) w
+        c = filter (\a -> not (elem a vowel)) w
+
