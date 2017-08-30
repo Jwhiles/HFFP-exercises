@@ -29,12 +29,12 @@ version :: Version
 version = Version [0,1,0,0] []
 bindir, libdir, dynlibdir, datadir, libexecdir, sysconfdir :: FilePath
 
-bindir     = "/Users/johnwhiles/code/HFFP-exercises/exercises/ch13/hangman/hangman/.stack-work/install/x86_64-osx/lts-9.1/8.0.2/bin"
-libdir     = "/Users/johnwhiles/code/HFFP-exercises/exercises/ch13/hangman/hangman/.stack-work/install/x86_64-osx/lts-9.1/8.0.2/lib/x86_64-osx-ghc-8.0.2/hangman-0.1.0.0"
-dynlibdir  = "/Users/johnwhiles/code/HFFP-exercises/exercises/ch13/hangman/hangman/.stack-work/install/x86_64-osx/lts-9.1/8.0.2/lib/x86_64-osx-ghc-8.0.2"
-datadir    = "/Users/johnwhiles/code/HFFP-exercises/exercises/ch13/hangman/hangman/.stack-work/install/x86_64-osx/lts-9.1/8.0.2/share/x86_64-osx-ghc-8.0.2/hangman-0.1.0.0"
-libexecdir = "/Users/johnwhiles/code/HFFP-exercises/exercises/ch13/hangman/hangman/.stack-work/install/x86_64-osx/lts-9.1/8.0.2/libexec"
-sysconfdir = "/Users/johnwhiles/code/HFFP-exercises/exercises/ch13/hangman/hangman/.stack-work/install/x86_64-osx/lts-9.1/8.0.2/etc"
+bindir     = "/Users/jwhiles/code/HFFP-exercises/exercises/ch13/hangman/hangman/.stack-work/install/x86_64-osx/lts-9.1/8.0.2/bin"
+libdir     = "/Users/jwhiles/code/HFFP-exercises/exercises/ch13/hangman/hangman/.stack-work/install/x86_64-osx/lts-9.1/8.0.2/lib/x86_64-osx-ghc-8.0.2/hangman-0.1.0.0"
+dynlibdir  = "/Users/jwhiles/code/HFFP-exercises/exercises/ch13/hangman/hangman/.stack-work/install/x86_64-osx/lts-9.1/8.0.2/lib/x86_64-osx-ghc-8.0.2"
+datadir    = "/Users/jwhiles/code/HFFP-exercises/exercises/ch13/hangman/hangman/.stack-work/install/x86_64-osx/lts-9.1/8.0.2/share/x86_64-osx-ghc-8.0.2/hangman-0.1.0.0"
+libexecdir = "/Users/jwhiles/code/HFFP-exercises/exercises/ch13/hangman/hangman/.stack-work/install/x86_64-osx/lts-9.1/8.0.2/libexec"
+sysconfdir = "/Users/jwhiles/code/HFFP-exercises/exercises/ch13/hangman/hangman/.stack-work/install/x86_64-osx/lts-9.1/8.0.2/etc"
 
 getBinDir, getLibDir, getDynLibDir, getDataDir, getLibexecDir, getSysconfDir :: IO FilePath
 getBinDir = catchIO (getEnv "hangman_bindir") (\_ -> return bindir)

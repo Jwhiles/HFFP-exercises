@@ -7,5 +7,5 @@ System/Random.hs:43:1: warning: [-Wtabs]
     Tab character found here, and in 74 further locations.
     Please use spaces instead.
 Installing library in
-/Users/johnwhiles/.stack/snapshots/x86_64-osx/lts-9.1/8.0.2/lib/x86_64-osx-ghc-8.0.2/random-1.1-9tceXaeYIMZ4JrKq20Egog
+/Users/jwhiles/.stack/snapshots/x86_64-osx/lts-9.1/8.0.2/lib/x86_64-osx-ghc-8.0.2/random-1.1-9tceXaeYIMZ4JrKq20Egog
 Registering random-1.1...
