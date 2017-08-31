@@ -62,11 +62,60 @@ fillInCharacter (Puzzle word filledIn s) c =
     zipper guessed wordChar guessChar =
       if wordChar == guessed
       then Just wordChar
-      else guessChar
+      else guessChar -- guessChar will already be a maybe value
     newFilledIn =
       zipWith (zipper c) word filledIn
 
+handleGuess :: Puzzle -> Char -> IO Puzzle
+handleGuess puzzle guess = do
+  putStrLn $ "Your guess was " ++ [guess]
+  case (charInWord puzzle guess, alreadyGuessed puzzle guess) of
+    (_, True) -> do
+      putStrLn "You already guessed that. Try something else"
+      return puzzle
+    (True, _) -> do
+      putStrLn "Correct! Woo."
+      return (fillInCharacter puzzle guess)
+    (False, _) -> do
+      putStrLn "This character was not in the word. Try again"
+      return (fillInCharacter puzzle guess)
+
+hasWon :: [Maybe Char] -> Bool
+hasWon = all isJust
+
+isDead :: [Char] -> [Char] -> Bool
+isDead word guesses =
+  length failures > 7
+    where failures = filter (\c -> not $ elem c word) guesses
+
+gameOver :: Puzzle -> IO ()
+gameOver (Puzzle wordToGuess wordsGuessed guesses) =
+  if isDead wordToGuess guesses && not (hasWon wordsGuessed) then
+    do putStrLn "You're hung!"
+       putStrLn $ "The word was " ++ wordToGuess
+       exitSuccess
+  else return ()
+
+gameWin :: Puzzle -> IO ()
+gameWin (Puzzle _ filledIn _) =
+  if hasWon filledIn then
+    do putStrLn "You Win!"
+       exitSuccess
+  else return ()
+
+runGame :: Puzzle -> IO ()
+runGame puzzle = forever $ do
+  gameOver puzzle
+  gameWin puzzle
+  putStrLn $ "Current puzzle is: " ++ show puzzle
+  putStrLn "Guess a letter: "
+  guess <- getLine
+  case guess of
+    [c] -> handleGuess puzzle c >>= runGame
+    _   -> putStrLn "Your guess must be a single character"
 
 main :: IO ()
-  main = do
-  putStrLn "hello world"
+main = do
+  word <- randomWord'
+  let puzzle = freshPuzzle $ fmap toLower word
+  runGame puzzle
