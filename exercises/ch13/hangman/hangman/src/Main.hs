@@ -2,7 +2,7 @@ module Main where
 
 import Control.Monad (forever)
 import Data.Char (toLower)
-import Data.Maybe (isJust)
+import Data.Maybe (isJust, fromJust)
 import Data.List (intersperse)
 import System.Exit (exitSuccess)
 import System.Random (randomRIO)
@@ -15,10 +15,10 @@ allWords = do
   return (lines dict)
 
 minWordLength :: Int
-minWordLength = 15
+minWordLength = 7
 
 maxWordLength :: Int
-maxWordLength = 20
+maxWordLength = 10
 
 gameWords :: IO WordList
 gameWords = do
@@ -38,9 +38,9 @@ randomWord' = gameWords >>= randomWord
 
 data Puzzle = Puzzle String [Maybe Char] [Char]
 instance Show Puzzle where
-  show (Puzzle _ discovered guessed) =
+  show (Puzzle _ discovered badGuesses) =
     (intersperse ' ' $ fmap renderPuzzleChar discovered)
-    ++ " Guessed so far " ++ guessed
+    ++ " Guessed so far " ++ badGuesses
 
 freshPuzzle :: String -> Puzzle
 freshPuzzle s = Puzzle s (map (const Nothing) s) []
@@ -57,7 +57,7 @@ renderPuzzleChar (Nothing) = '_'
 
 fillInCharacter :: Puzzle -> Char -> Puzzle
 fillInCharacter (Puzzle word filledIn s) c =
-  Puzzle word newFilledIn (c : s)
+  Puzzle word newFilledIn newGuesses
   where
     zipper guessed wordChar guessChar =
       if wordChar == guessed
@@ -65,6 +65,8 @@ fillInCharacter (Puzzle word filledIn s) c =
       else guessChar -- guessChar will already be a maybe value
     newFilledIn =
       zipWith (zipper c) word filledIn
+    newGuesses = if elem c word then s else (c : s)
+
 
 handleGuess :: Puzzle -> Char -> IO Puzzle
 handleGuess puzzle guess = do
