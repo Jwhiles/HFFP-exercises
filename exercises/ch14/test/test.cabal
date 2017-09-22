@@ -14,7 +14,7 @@ cabal-version:       >=1.10
 extra-source-files:  README.md
 
 library
-  exposed-modules:     Addition, Qc
+  exposed-modules:     Addition, Qc, NumW, QuicklyCheck
   ghc-options:         -Wall -fwarn-tabs
   build-depends:       base >=4.7 && <5
                      , hspec
