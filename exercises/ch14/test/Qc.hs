@@ -46,4 +46,13 @@ genThreeple = do
   c <- arbitrary
   return (a, b, c)
 
+data Fool =
+    Fulse
+  | Frue
+  deriving (Eq, Show)
 
+genFool :: Gen Fool
+genFool = elements [Fulse, Frue]
+
+probablyFulse :: Gen Fool
+probablyFulse = elements [Fulse, Fulse, Frue]
