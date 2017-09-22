@@ -12,4 +12,3 @@ instance Monoid a => Monoid (Optional a) where
   mappend _ (Only a) = (Only a)
   mappend Nada Nada = Nada
 
-
