@@ -1,8 +1,14 @@
 import Data.List (sort)
+
 data BinaryTree a =
     Leaf
   | Node (BinaryTree a) a (BinaryTree a)
   deriving (Eq, Ord, Show)
+
+instance Functor BinaryTree where
+  fmap _ Leaf = Leaf
+  fmap f (Node left a right) =
+    Node (fmap f left) (f a) (mapTree f right)
 
 myTree :: BinaryTree String
 myTree = Node Leaf "hey" (Node Leaf "woah" Leaf) 
