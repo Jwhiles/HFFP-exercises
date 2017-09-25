@@ -42,9 +42,58 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
 
 type TwoAssoc a b = Two a b -> Two a b -> Two a b -> Bool
 
+-- 4
+
+data Three a b c = Three a b c deriving (Eq, Show)
+
+instance (Semigroup a, Semigroup b, Semigroup c) => Semigroup (Three a b c) where
+  (Three x y z) <> (Three x' y' z') = Three (x <> x') (y <> y') (z <> z')
+
+instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) where
+  arbitrary = do
+  x <- arbitrary
+  y <- arbitrary
+  z <- arbitrary
+  return (Three x y z)
+
+type ThreeAssoc a b c = Three a b c -> Three a b c -> Three a b c -> Bool
+
+-- 5
+
+data Four a b c d = Four a b c d deriving (Eq, Show)
+
+instance (Semigroup a, Semigroup b, Semigroup c, Semigroup d) => Semigroup (Four a b c d) where
+  (Four x y z p) <> (Four x' y' z' p') = Four (x <> x') (y <> y') (z <> z') (p <> p')
+
+instance (Arbitrary a, Arbitrary b, Arbitrary c, Arbitrary d) => Arbitrary (Four a b c d) where
+  arbitrary = do
+  x <- arbitrary
+  y <- arbitrary
+  z <- arbitrary
+  p <- arbitrary
+  return (Four x y z p)
+
+type FourAssoc a b c d = Four a b c d -> Four a b c d -> Four a b c d -> Bool
+
+-- 6
+data BoolConj = BoolConj Bool deriving (Eq, Show)
+
+instance Semigroup BoolConj where
+  (BoolConj False) <> _ = BoolConj False
+  _ <> (BoolConj False) = BoolConj False
+  _ <> _ = BoolConj True
+
+instance Arbitrary BoolConj where
+  arbitrary = elements [BoolConj True, BoolConj False]
+
+type BoolConjAssoc = BoolConj -> BoolConj -> BoolConj -> Bool
+
 
 main :: IO ()
 main = do
   quickCheck (semigroupAssoc :: TrivialAssoc)
   quickCheck (semigroupAssoc :: IdentityAssoc String)
   quickCheck (semigroupAssoc :: TwoAssoc String [Int])
+  quickCheck (semigroupAssoc :: ThreeAssoc String [Int] String)
+  quickCheck (semigroupAssoc :: FourAssoc String [Int] String [Int])
+  quickCheck (semigroupAssoc :: BoolConjAssoc)
