@@ -88,6 +88,37 @@ instance Arbitrary BoolConj where
 
 type BoolConjAssoc = BoolConj -> BoolConj -> BoolConj -> Bool
 
+-- 7
+data BoolDisj = BoolDisj Bool deriving (Eq, Show)
+
+instance Semigroup BoolDisj where
+  (BoolDisj True) <> _ = (BoolDisj True)
+  _ <> (BoolDisj True) = (BoolDisj True)
+  _ <> _               = (BoolDisj False)
+
+instance Arbitrary BoolDisj where
+  arbitrary = elements [(BoolDisj True), (BoolDisj False)]
+
+type BoolDisjAssoc = BoolDisj -> BoolDisj -> BoolDisj -> Bool
+
+-- 8
+data Or a b = Fst a | Snd b deriving (Eq, Show)
+
+instance Semigroup (Or a b) where
+  (Snd a) <> _ = (Snd a)
+  _ <> (Snd a) = (Snd a)
+  _ <> (Fst a) = (Fst a)
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Or a b) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    elements [Fst x, Snd y]
+
+type OrAssoc a b = Or a b -> Or a b -> Or a b -> Bool
+
+
+
 
 main :: IO ()
 main = do
@@ -97,3 +128,5 @@ main = do
   quickCheck (semigroupAssoc :: ThreeAssoc String [Int] String)
   quickCheck (semigroupAssoc :: FourAssoc String [Int] String [Int])
   quickCheck (semigroupAssoc :: BoolConjAssoc)
+  quickCheck (semigroupAssoc :: BoolDisjAssoc)
+  quickCheck (semigroupAssoc :: OrAssoc String [Int])
