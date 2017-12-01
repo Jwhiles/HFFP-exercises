@@ -8,7 +8,7 @@ import Control.Applicative
 data Pair a = Pair a a deriving (Eq, Show)
 
 instance Functor Pair where
-  fmap f (Pair x y) = Pair (f x) (f y)
+  fmap f x = pure f <*> x
 
 instance Applicative Pair where
   pure x = (Pair x x)
@@ -24,8 +24,8 @@ instance Eq a => EqProp (Pair a) where (=-=) = eq
 
 data Two a b = Two a b deriving (Eq, Show)
 
-instance Functor (Two b) where
-  fmap f (Two x y) = Two x (f y)
+instance Monoid b => Functor (Two b) where
+  fmap f x = pure f <*> x
 
 instance Monoid b => Applicative (Two b) where
   pure x = Two mempty x
@@ -41,8 +41,8 @@ instance (Eq a, Eq b) => EqProp (Two a b) where (=-=) = eq
 
 data Three a b c = Three a b c deriving (Eq, Show)
 
-instance Functor (Three a b) where
-  fmap f (Three a b c) = Three a b (f c)
+instance (Monoid a, Monoid b) => Functor (Three a b) where
+  fmap f x = pure f <*> x
 
 instance (Monoid a, Monoid b) => Applicative (Three a b) where
   pure x = Three mempty mempty x
