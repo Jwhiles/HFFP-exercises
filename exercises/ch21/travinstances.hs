@@ -146,6 +146,46 @@ genThree' = do
   z <- arbitrary
   return $ Three' x y z
 
+-- data S n a = S (n a) a
+
+-- instance Functor n => Functor (S n) where
+--   fmap f (S n a) = S (fmap f n) (f a)
+
+-- instance Foldable n => Foldable (S n) where
+--   foldMap f (S n a) = foldMap f n <> f a
+
+-- instance (Eq n, Eq a) => EqProp (S n a) where
+--   (=-=) = eq
+
+-- instance Traversable n => Traversable (S n) where
+--    traverse f (S n a) = S <$> traverse f n <*> f a
+-- instance (Arbitrary (n a), CoArbitrary (n a), Arbitrary a, CoArbitrary a) => Arbitrary (S n a) where
+--       arbitrary = genS
+
+-- genS :: (Arbitrary (n a), CoArbitrary (n a), Arbitrary a, CoArbitrary a) => Gen (S n a)
+-- genS = do
+--   n <- arbitrary
+--   a <- arbitrary
+--   return $ S (n a) a
+
+data Tree a =
+  Empty | Leaf a | Node (Tree a) a (Tree a)
+  deriving (Eq, Show)
+
+instance Functor Tree where
+  fmap _ Empty = Empty
+  fmap f (Leaf a) = Leaf (f a)
+  fmap f (Node (t) a (t')) = Node (fmap f t) (f a) (fmap f t')
+
+instance Foldable Tree where
+  foldMap f empty = mempty
+  foldMap f (Leaf a) = f a
+  foldMap f (Node (t) a (t')) = (foldMap f t) <> (f a) <> (foldMap f t')
+
+instance Traversable Tree where
+  traverse f empty = pure empty
+  traverse f empty = pure empty
+
 listTrigger = undefined :: List (Int, Int, [Int])
 optionalTrigger = undefined :: Optional (Int, Int, [Int])
 constantTrigger = undefined :: Constant Int (Int, Int, [Int])
