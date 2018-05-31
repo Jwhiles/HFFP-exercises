@@ -25,4 +25,19 @@ instance Monad m => Monad (StateT s m) where
                 runStateT (f a) s'
 
 
+class MonadTrans t where
+  lift :: (Monad m) => m a -> t m a
+
+instance MonadTrans (StateT s) where
+  lift = \m -> StateT $
+                \s -> do 
+                    a <- m
+                    return (a, s)
+
+class (Monad m) => MonadIO m where
+  liftIO :: IO a -> m a
+
+instance (MonadIO m) => MonadIO (StateT s m) where
+  liftIO = lift . liftIO
+                        
                 

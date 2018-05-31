@@ -32,3 +32,10 @@ eitherT f g (EitherT amb) = amb >>= (\v ->
 -- eitherT f g (EitherT amb) = amb >>= h
 --                    where h (Left e) = f e
 --                          h (Right a) = g a
+--
+
+class MonadTrans t where
+  lift :: (Monad m) => m a -> t m a
+
+instance MonadTrans (EitherT e) where
+  lift = EitherT . fmap Right
